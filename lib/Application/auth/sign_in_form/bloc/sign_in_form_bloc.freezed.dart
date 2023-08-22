@@ -806,37 +806,15 @@ abstract class SignInWithGooglePressesd implements SignInFormEvent {
 
 /// @nodoc
 mixin _$SignInFormState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) =>
+  EmailAddress get emailAddress => throw _privateConstructorUsedError;
+  Password get password => throw _privateConstructorUsedError;
+  bool get isSubmitting => throw _privateConstructorUsedError;
+  Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) =>
+  bool get showErrorMessage => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SignInFormStateCopyWith<SignInFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -845,6 +823,13 @@ abstract class $SignInFormStateCopyWith<$Res> {
   factory $SignInFormStateCopyWith(
           SignInFormState value, $Res Function(SignInFormState) then) =
       _$SignInFormStateCopyWithImpl<$Res, SignInFormState>;
+  @useResult
+  $Res call(
+      {EmailAddress emailAddress,
+      Password password,
+      bool isSubmitting,
+      Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption,
+      bool showErrorMessage});
 }
 
 /// @nodoc
@@ -856,99 +841,176 @@ class _$SignInFormStateCopyWithImpl<$Res, $Val extends SignInFormState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? emailAddress = null,
+    Object? password = null,
+    Object? isSubmitting = null,
+    Object? authFailureOrSuccessOption = null,
+    Object? showErrorMessage = null,
+  }) {
+    return _then(_value.copyWith(
+      emailAddress: null == emailAddress
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as EmailAddress,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as Password,
+      isSubmitting: null == isSubmitting
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authFailureOrSuccessOption: null == authFailureOrSuccessOption
+          ? _value.authFailureOrSuccessOption
+          : authFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AuthFailure, Unit>>,
+      showErrorMessage: null == showErrorMessage
+          ? _value.showErrorMessage
+          : showErrorMessage // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$_SignInFormStateCopyWith<$Res>
+    implements $SignInFormStateCopyWith<$Res> {
+  factory _$$_SignInFormStateCopyWith(
+          _$_SignInFormState value, $Res Function(_$_SignInFormState) then) =
+      __$$_SignInFormStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {EmailAddress emailAddress,
+      Password password,
+      bool isSubmitting,
+      Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption,
+      bool showErrorMessage});
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SignInFormStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$_SignInFormStateCopyWithImpl<$Res>
+    extends _$SignInFormStateCopyWithImpl<$Res, _$_SignInFormState>
+    implements _$$_SignInFormStateCopyWith<$Res> {
+  __$$_SignInFormStateCopyWithImpl(
+      _$_SignInFormState _value, $Res Function(_$_SignInFormState) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? emailAddress = null,
+    Object? password = null,
+    Object? isSubmitting = null,
+    Object? authFailureOrSuccessOption = null,
+    Object? showErrorMessage = null,
+  }) {
+    return _then(_$_SignInFormState(
+      emailAddress: null == emailAddress
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as EmailAddress,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as Password,
+      isSubmitting: null == isSubmitting
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authFailureOrSuccessOption: null == authFailureOrSuccessOption
+          ? _value.authFailureOrSuccessOption
+          : authFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AuthFailure, Unit>>,
+      showErrorMessage: null == showErrorMessage
+          ? _value.showErrorMessage
+          : showErrorMessage // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$_SignInFormState implements _SignInFormState {
+  const _$_SignInFormState(
+      {required this.emailAddress,
+      required this.password,
+      required this.isSubmitting,
+      required this.authFailureOrSuccessOption,
+      required this.showErrorMessage});
+
+  @override
+  final EmailAddress emailAddress;
+  @override
+  final Password password;
+  @override
+  final bool isSubmitting;
+  @override
+  final Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption;
+  @override
+  final bool showErrorMessage;
 
   @override
   String toString() {
-    return 'SignInFormState.initial()';
+    return 'SignInFormState(emailAddress: $emailAddress, password: $password, isSubmitting: $isSubmitting, authFailureOrSuccessOption: $authFailureOrSuccessOption, showErrorMessage: $showErrorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType &&
+            other is _$_SignInFormState &&
+            (identical(other.emailAddress, emailAddress) ||
+                other.emailAddress == emailAddress) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.isSubmitting, isSubmitting) ||
+                other.isSubmitting == isSubmitting) &&
+            (identical(other.authFailureOrSuccessOption,
+                    authFailureOrSuccessOption) ||
+                other.authFailureOrSuccessOption ==
+                    authFailureOrSuccessOption) &&
+            (identical(other.showErrorMessage, showErrorMessage) ||
+                other.showErrorMessage == showErrorMessage));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, emailAddress, password,
+      isSubmitting, authFailureOrSuccessOption, showErrorMessage);
 
+  @JsonKey(ignore: true)
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+  @pragma('vm:prefer-inline')
+  _$$_SignInFormStateCopyWith<_$_SignInFormState> get copyWith =>
+      __$$_SignInFormStateCopyWithImpl<_$_SignInFormState>(this, _$identity);
 }
 
-abstract class _Initial implements SignInFormState {
-  const factory _Initial() = _$_Initial;
+abstract class _SignInFormState implements SignInFormState {
+  const factory _SignInFormState(
+      {required final EmailAddress emailAddress,
+      required final Password password,
+      required final bool isSubmitting,
+      required final Option<Either<AuthFailure, Unit>>
+          authFailureOrSuccessOption,
+      required final bool showErrorMessage}) = _$_SignInFormState;
+
+  @override
+  EmailAddress get emailAddress;
+  @override
+  Password get password;
+  @override
+  bool get isSubmitting;
+  @override
+  Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption;
+  @override
+  bool get showErrorMessage;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SignInFormStateCopyWith<_$_SignInFormState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
