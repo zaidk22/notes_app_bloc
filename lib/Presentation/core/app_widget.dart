@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app_bloc/Presentation/core/sign_in/sign_in_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app_bloc/Application/auth/bloc/auth_bloc_bloc.dart';
+import 'package:notes_app_bloc/Presentation/pages/sign_in/sign_in_page.dart';
 import 'package:notes_app_bloc/Presentation/core/styles/app_theme.dart';
+import 'package:notes_app_bloc/Presentation/routes/routes.dart';
+import 'package:notes_app_bloc/injection.dart';
 
 import '../home_screen.dart';
 
@@ -11,12 +15,22 @@ class AppWidget extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Notes App',
-          theme: AppTheme.light,
-              darkTheme: AppTheme.dark,
-      home: const SignInPage(),
+    AppRouter appRouter = AppRouter();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<AuthBloc>()..add(const AuthBlocEvent.authCheckedRequested()),
+        ),
+
+      ],
+      child: MaterialApp.router(
+        routerConfig: appRouter.config(),
+        debugShowCheckedModeBanner: false,
+       
+        title: 'Notes App',
+            theme: AppTheme.light,
+                darkTheme: AppTheme.dark,
+       
+      ),
     );
   }
 }
