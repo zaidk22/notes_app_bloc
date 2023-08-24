@@ -14,12 +14,14 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   AuthBloc(this._authFacade) : super( const AuthBlocState.initial()) {
     on<_$AuthCheckedRequested>((event, emit) {
           final userOption =_authFacade.getSignedInUser();
-          userOption.fold(() => const AuthBlocState.unauthenticated(), (_) => const  AuthBlocState.authenticated() ,);
+          userOption.fold(() => emit(const AuthBlocState.unauthenticated()), (_) => emit(const  AuthBlocState.authenticated() ),);
           
     });
       on<_$SignedOut>((event, emit) {
           _authFacade.signOut();
-        const AuthBlocState.unauthenticated();
+       
+        emit( const AuthBlocState.unauthenticated());
+        
           
     });
   }
