@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,15 +17,15 @@ class SignInForm extends StatelessWidget {
         state.authFailureOrSuccessOption.fold(
             () {},
             (either) => either.fold((failure) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-                failure.map(cancelledByUser: (_) => 'Cancelled ',
-                 serverError:  (_) => '', emailAlreadyInUse:  (_) => 'Email already in use',
-                 invalidEmailAndPasswordCombination:  (_) => 'Invalid email or password',
-                   ),
-                style: const TextStyle(color: Colors.amber),  
-              ),
-              
-              ));
+                 FlushbarHelper.createError(
+                message: failure.map(
+                  cancelledByUser: (_) => 'Cancelled',
+                  serverError: (_) => 'Server error',
+                  emailAlreadyInUse: (_) => 'Email already in use',
+                  invalidEmailAndPasswordCombination: (_) =>
+                      'Invalid email and password combination',
+                ),
+              ).show(context);
             }, (r) {
                       AutoRouter.of(context).replace(const NotesOverviewRoute());
               context

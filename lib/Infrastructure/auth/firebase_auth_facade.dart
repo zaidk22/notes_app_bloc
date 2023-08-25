@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:notes_app_bloc/Domain/auth/auth_failure.dart';
 import 'package:notes_app_bloc/Domain/auth/i_auth_facade.dart';
 import 'package:notes_app_bloc/Domain/auth/user.dart' as user;
@@ -41,13 +44,13 @@ class FirebaseAuthFacade implements IAuthFacade {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: emailAddressStr, password: passStr);
       return right(unit);
-    } on PlatformException catch (e) {
-      if (e.code == 'ERROR_WRONG_PASSWORD' ||
-          e.code == 'ERROR_USER_NOT_FOUND') {
+    } on FirebaseAuthException catch (e) {
+    
+      if (e.message == 'The password is invalid or the user does not have a password.' ) {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
       } else {
         return left(const AuthFailure.serverError("Something went wrong"));
-      }
+     }
     }
   }
 
