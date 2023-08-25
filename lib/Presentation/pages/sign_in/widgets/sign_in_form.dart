@@ -1,7 +1,9 @@
-import 'package:another_flushbar/flushbar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app_bloc/Presentation/routes/routes.gr.dart';
 
+import '../../../../Application/auth/bloc/auth_bloc_bloc.dart';
 import '../../../../Application/auth/sign_in_form/sign_in_form_bloc.dart';
 
 class SignInForm extends StatelessWidget {
@@ -24,7 +26,10 @@ class SignInForm extends StatelessWidget {
               
               ));
             }, (r) {
-                  // navigate
+                      AutoRouter.of(context).replace(const NotesOverviewRoute());
+              context
+                  .read<AuthBloc>()
+                  .add(const AuthBlocEvent.authCheckedRequested());
                 }));
       },
       builder: (context, state) {
@@ -117,7 +122,12 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
               ),
+               if (state.isSubmitting) ...[
+                const SizedBox(height: 8),
+                const LinearProgressIndicator(value: null),
+              ]
             ],
+            
           ),
         );
       },

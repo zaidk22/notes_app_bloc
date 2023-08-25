@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app_bloc/Application/auth/bloc/auth_bloc_bloc.dart';
+import 'package:notes_app_bloc/Presentation/core/utilities/lifecycle_watcher.dart';
 import 'package:notes_app_bloc/Presentation/pages/sign_in/sign_in_page.dart';
 import 'package:notes_app_bloc/Presentation/core/styles/app_theme.dart';
 import 'package:notes_app_bloc/Presentation/routes/routes.dart';
@@ -16,20 +17,22 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppRouter appRouter = AppRouter();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<AuthBloc>()..add(const AuthBlocEvent.authCheckedRequested()),
+    return LifecycleWatcher(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<AuthBloc>()..add(const AuthBlocEvent.authCheckedRequested()),
+          ),
+    
+        ],
+        child: MaterialApp.router(
+          routerConfig: appRouter.config(),
+          debugShowCheckedModeBanner: false,
+         
+          title: 'Notes App',
+              theme: AppTheme.light,
+                  darkTheme: AppTheme.dark,
+         
         ),
-
-      ],
-      child: MaterialApp.router(
-        routerConfig: appRouter.config(),
-        debugShowCheckedModeBanner: false,
-       
-        title: 'Notes App',
-            theme: AppTheme.light,
-                darkTheme: AppTheme.dark,
-       
       ),
     );
   }

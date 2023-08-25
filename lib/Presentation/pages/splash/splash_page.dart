@@ -17,6 +17,10 @@ class SplashPage extends StatelessWidget {
         authenticated: (_){
           // AutoRouter.of(context).pushNamed(NotesRoute.name)
           print("authenticated");
+          AutoRouter.of(context).replace(const  NotesOverviewRoute());
+              // context
+              //     .read<AuthBloc>()
+              //     .add(const AuthBlocEvent.authCheckedRequested());
         }, 
         unauthenticated:(_){
          // AutoRouter.of(context).pushNamed(SignInRoute.name);
