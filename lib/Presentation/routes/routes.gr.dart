@@ -27,7 +27,8 @@ abstract class $AppRouter extends _i6.RootStackRouter {
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
     NoteFormRoute.name: (routeData) {
-      final args = routeData.argsAs<NoteFormRouteArgs>();
+      final args = routeData.argsAs<NoteFormRouteArgs>(
+          orElse: () => const NoteFormRouteArgs());
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.NoteFormPage(
@@ -68,7 +69,7 @@ abstract class $AppRouter extends _i6.RootStackRouter {
 class NoteFormRoute extends _i6.PageRouteInfo<NoteFormRouteArgs> {
   NoteFormRoute({
     _i7.Key? key,
-    required _i8.Note? editedNote,
+    _i8.Note? editedNote,
     List<_i6.PageRouteInfo>? children,
   }) : super(
           NoteFormRoute.name,
@@ -88,7 +89,7 @@ class NoteFormRoute extends _i6.PageRouteInfo<NoteFormRouteArgs> {
 class NoteFormRouteArgs {
   const NoteFormRouteArgs({
     this.key,
-    required this.editedNote,
+    this.editedNote,
   });
 
   final _i7.Key? key;

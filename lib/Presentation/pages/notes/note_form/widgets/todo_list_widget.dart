@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:notes_app_bloc/Presentation/pages/notes/note_form/misc/build_context_x.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../Application/notes/note_form/note_form_bloc.dart';
 import '../../../../../Domain/notes/value_objects.dart';
@@ -45,7 +46,7 @@ class TodoList extends StatelessWidget {
             onReorderFinished: (item, from, to, newItems) {
               context.formTodos = newItems.toImmutableList();
               context
-                  .bloc<NoteFormBloc>()
+                  .read<NoteFormBloc>()
                   .add(NoteFormEvent.todoChanged(context.formTodos));
             },
             itemBuilder: (context, itemAnimation, item, index) {
@@ -87,95 +88,99 @@ class TodoTile extends HookWidget {
         context.formTodos.getOrElse(index, (_) => TodoItemPrimitive.empty());
     final textEditingController = useTextEditingController(text: todo.name);
 
-    return Slidable(
-      
-      actionPane: const SlidableDrawerActionPane(),
-      actionExtentRatio: 0.15,
-      secondaryActions: [
-        IconSlideAction(
-          caption: 'Delete',
-          icon: Icons.delete,
-          color: Colors.red,
-          onTap: () {
-            context.formTodos = context.formTodos.minusElement(todo);
-            context
-                .read<NoteFormBloc>()
-                .add(NoteFormEvent.todoChanged(context.formTodos));
-          },
-        ),
-      ],
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        child: Material(
-          elevation: elevation,
-          animationDuration: const Duration(milliseconds: 50),
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: ListTile(
-              leading: Checkbox(
-                value: todo.done,
-                onChanged: (value) {
-                  context.formTodos = context.formTodos.map(
-                    (listTodo) => listTodo == todo
-                        ? todo.copyWith(done: value)
-                        : listTodo,
-                  );
-                  context
-                      .read<NoteFormBloc>()
-                      .add(NoteFormEvent.todoChanged(context.formTodos));
-                },
-              ),
-              trailing: const Handle(
-                child: Icon(Icons.list),
-              ),
-              title: TextFormField(
-                controller: textEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Todo',
-                  counterText: '',
-                  border: InputBorder.none,
-                ),
-                maxLength: TodoName.maxLength,
-                onChanged: (value) {
-                  context.formTodos = context.formTodos.map(
-                    (listTodo) => listTodo == todo
-                        ? todo.copyWith(name: value)
-                        : listTodo,
-                  );
-                  context
-                      .read<NoteFormBloc>()
-                      .add(NoteFormEvent.todoChanged(context.formTodos));
-                },
-                validator: (_) {
-                  return context
-                      .read<NoteFormBloc>()
-                      .state
-                      .note
-                      .todos
-                      .value
-                      .fold(
-                        // Failure stemming from the TodoList length should NOT be displayed by the individual TextFormFields
-                        (f) => null,
-                        (todoList) => todoList[index].name.value.fold(
-                              (f) => f.maybeMap(
-                                empty: (_) => 'Cannot be empty',
-                                exceedingLength: (_) => 'Too long',
-                                multiline: (_) => 'Has to be in a single line',
-                                orElse: () => null,
-                              ),
-                              (_) => null,
-                            ),
-                      );
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+return Container();
+    // return Slidable(
+    //   startActionPane: ,
+    //   // actionPane: const SlidableDrawerActionPane(),
+    
+
+    //   // actionExtentRatio: 0.15,
+    //   secondaryActions: [
+    //     IconSlideAction(
+    //       caption: 'Delete',
+    //       icon: Icons.delete,
+    //       color: Colors.red,
+    //       onTap: () {
+    //         context.formTodos = context.formTodos.minusElement(todo);
+    //         context
+    //             .read<NoteFormBloc>()
+    //             .add(NoteFormEvent.todoChanged(context.formTodos));
+    //       },
+    //     ),
+    //   ],
+    //   child: Padding(
+    //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    //     child: Material(
+    //       elevation: elevation,
+    //       animationDuration: const Duration(milliseconds: 50),
+    //       borderRadius: BorderRadius.circular(8),
+    //       child: Container(
+    //         decoration: BoxDecoration(
+    //           border: Border.all(color: Colors.grey),
+    //           borderRadius: BorderRadius.circular(8),
+    //         ),
+    //         child: ListTile(
+    //           leading: Checkbox(
+    //             value: todo.done,
+    //             onChanged: (value) {
+    //               context.formTodos = context.formTodos.map(
+    //                 (listTodo) => listTodo == todo
+    //                     ? todo.copyWith(done: value ?? false)
+    //                     : listTodo,
+    //               );
+    //               context
+    //                   .read<NoteFormBloc>()
+    //                   .add(NoteFormEvent.todoChanged(context.formTodos));
+    //             },
+    //           ),
+    //           trailing: const Handle(
+    //             child: Icon(Icons.list),
+    //           ),
+    //           title: TextFormField(
+    //             controller: textEditingController,
+    //             decoration: InputDecoration(
+    //               hintText: 'Todo',
+    //               counterText: '',
+    //               border: InputBorder.none,
+    //             ),
+    //             maxLength: TodoName.maxLength,
+    //             onChanged: (value) {
+    //               context.formTodos = context.formTodos.map(
+    //                 (listTodo) => listTodo == todo
+    //                     ? todo.copyWith(name: value)
+    //                     : listTodo,
+    //               );
+    //               context
+    //                   .read<NoteFormBloc>()
+    //                   .add(NoteFormEvent.todoChanged(context.formTodos));
+    //             },
+    //             validator: (_) {
+    //               return context
+    //                   .read<NoteFormBloc>()
+    //                   .state
+    //                   .note
+    //                   .todos
+    //                   .value
+    //                   .fold(
+    //                     // Failure stemming from the TodoList length should NOT be displayed by the individual TextFormFields
+    //                     (f) => null,
+    //                     (todoList) => todoList[index].name.value.fold(
+    //                           (f) => f.maybeMap(
+    //                             empty: (_) => 'Cannot be empty',
+    //                             exceedingLength: (_) => 'Too long',
+    //                             multiline: (_) => 'Has to be in a single line',
+    //                             orElse: () => null,
+    //                           ),
+    //                           (_) => null,
+    //                         ),
+    //                   );
+    //             },
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+  
   }
 }

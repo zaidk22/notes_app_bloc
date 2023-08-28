@@ -28,9 +28,8 @@ class BodyField extends HookWidget {
               labelText: 'Note',
               counterText: '',
             ),
-            maxLength: NoteBody.maxLength,
-            maxLines: null,
-            minLines: 5,
+          //  maxLength: NoteBody.maxLength,
+          //  minLines: 5,
             onChanged: (value) => context
                 .read<NoteFormBloc>()
                 .add(NoteFormEvent.bodyChanged(value)),
